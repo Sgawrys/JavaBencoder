@@ -1,4 +1,4 @@
-package com.sgawrys.bencoder;
+package com.sgawrys.bencoder.application;
 
 import java.util.ArrayList;
 import java.util.HashMap;

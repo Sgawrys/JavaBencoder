@@ -1,4 +1,4 @@
-package com.sgawrys.bencoder;
+package com.sgawrys.bencoder.application;
 
 import java.util.List;
 import java.util.Map;

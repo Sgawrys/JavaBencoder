@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.sgawrys.bencoder.Decoder;
+import com.sgawrys.bencoder.application.Decoder;
 import com.sgawrys.bencoder.exceptions.DecoderException;
 
 public class DecoderTest {

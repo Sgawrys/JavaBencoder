@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.sgawrys.bencoder.Encoder;
+import com.sgawrys.bencoder.application.Encoder;
 
 public class EncoderTest {
 
