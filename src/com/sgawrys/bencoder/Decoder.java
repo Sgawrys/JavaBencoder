@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.sgawrys.bencoder.exceptions.DecoderException;
+import com.sgawrys.bencoder.tokens.BencodingToken;
 
 /**
  * Decoder for bencoded strings.
@@ -16,13 +17,6 @@ import com.sgawrys.bencoder.exceptions.DecoderException;
 public class Decoder {
 
 	private static final Decoder DECODER = new Decoder();
-	
-	private static final String START_TOKEN = "i";
-	private static final String START_DICT_TOKEN = "d";
-	private static final String START_LIST_TOKEN = "l";
-	
-	private static final String END_TOKEN = "e";
-	private static final String COLON_TOKEN = ":";
 	
 	private Decoder() {
 		
@@ -37,15 +31,15 @@ public class Decoder {
 	}
 	
 	public Object determineType(String bencodedString) {
-		if(bencodedString.startsWith(START_LIST_TOKEN)) {
+		if(bencodedString.startsWith(BencodingToken.START_LIST_TOKEN)) {
 			return decodeList(bencodedString);
 		}
 		
-		if(bencodedString.startsWith(START_DICT_TOKEN)) {
+		if(bencodedString.startsWith(BencodingToken.START_DICT_TOKEN)) {
 			return decodeDict(bencodedString);
 		}
 		
-		if(bencodedString.startsWith(START_TOKEN)) {
+		if(bencodedString.startsWith(BencodingToken.START_TOKEN)) {
 			return decodeInt(bencodedString);
 		}
 		
@@ -70,7 +64,7 @@ public class Decoder {
 	}
 	
 	public String decodeString(String encodedString) throws DecoderException {
-		int colonTokenIndex = encodedString.indexOf(COLON_TOKEN);
+		int colonTokenIndex = encodedString.indexOf(BencodingToken.COLON_TOKEN);
 		
 		if(colonTokenIndex == -1)
 			throw new DecoderException();

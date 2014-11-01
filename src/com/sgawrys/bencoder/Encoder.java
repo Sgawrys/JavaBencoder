@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.sgawrys.bencoder.tokens.BencodingToken;
+
 /**
  * 
  * Singleton class for bencoding strings most commonly used in torrent files.
@@ -14,13 +16,6 @@ import java.util.Map.Entry;
 public class Encoder {
 
 	private static final Encoder ENCODER = new Encoder();
-	
-	private static final String START_TOKEN = "i";
-	private static final String START_DICT_TOKEN = "d";
-	private static final String START_LIST_TOKEN = "l";
-	
-	private static final String END_TOKEN = "e";
-	private static final String COLON_TOKEN = ":";
 	
 	private Encoder() {
 		
@@ -36,7 +31,7 @@ public class Encoder {
 	 * @return
 	 */
 	public String encode(String encodeString) {
-		return encodeString.length() + COLON_TOKEN + encodeString;
+		return encodeString.length() + BencodingToken.COLON_TOKEN + encodeString;
 	}
 	
 	/**
@@ -45,7 +40,7 @@ public class Encoder {
 	 * @return
 	 */
 	public String encodeInteger(Integer encodeInt) {
-		return START_TOKEN + encodeInt + END_TOKEN;
+		return BencodingToken.START_TOKEN + encodeInt + BencodingToken.END_TOKEN;
 	}
 	
 	/**
@@ -56,11 +51,11 @@ public class Encoder {
 	 */
 	public String encodeList(List<?> encodeList) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(START_LIST_TOKEN);
+		sb.append(BencodingToken.START_LIST_TOKEN);
 		for(Object entry : encodeList) {
 			sb.append(determineEncoding(entry));
 		}
-		sb.append(END_TOKEN);
+		sb.append(BencodingToken.END_TOKEN);
 		return sb.toString();
 	}
 	
@@ -73,7 +68,7 @@ public class Encoder {
 	 */
 	public String encodeDictionary(Map<?,?> encodeDictionary) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(START_DICT_TOKEN);
+		sb.append(BencodingToken.START_DICT_TOKEN);
 		for(Entry<?,?> entry : encodeDictionary.entrySet()) {
 			Object entryKey = entry.getKey();
 			Object entryValue = entry.getValue();
@@ -81,7 +76,7 @@ public class Encoder {
 			sb.append(determineEncoding(entryKey));
 			sb.append(determineEncoding(entryValue));
 		}
-		sb.append(END_TOKEN);
+		sb.append(BencodingToken.END_TOKEN);
 		return sb.toString();
 	}
 	
