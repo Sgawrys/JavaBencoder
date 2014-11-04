@@ -1,6 +1,8 @@
 JavaBencoder
 ============
 
+###Currently still a work in progress
+
 Quick and dirty bencoding implementation in Java.
 
 [Bencoding](http://en.wikipedia.org/wiki/Bencode) - Wikipedia entry describing what this does.
@@ -20,9 +22,15 @@ Quick and dirty bencoding implementation in Java.
 
 **Lists**
 
-("Test", 4, "Bencoding) -> "l4:Testi4e9:Bencodinge"
+("Test", 4, "Bencoding") -> "l4:Testi4e9:Bencodinge"
 
 **Dictionaries**
 
-("Test" -> 4,
- "Bencoding" -> 5) -> "d4:Testi4e9:Bencodingi5ee"
+("Test" : 4,
+ "Bencoding" : 5) -> "d4:Testi4e9:Bencodingi5ee"
+ 
+ ------------
+ 
+ ## What features to complete
+ 
+ *- Get decoding finished
