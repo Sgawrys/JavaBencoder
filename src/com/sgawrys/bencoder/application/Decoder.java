@@ -34,7 +34,6 @@ public class Decoder {
 		List<String> tokenList;
 		try {
 			tokenList = tokenize(bencodedString);
-			System.out.println("PRINTING TOKEN LIST");
 			for(int i = 0; i < tokenList.size(); i++) {
 				switch(tokenList.get(i)) {
 					case BencodingToken.START_TOKEN:
@@ -46,13 +45,13 @@ public class Decoder {
 						i++;
 						break;
 					case BencodingToken.START_LIST_TOKEN:
+						
 						break;
 					case BencodingToken.START_DICT_TOKEN:
 						break;
 						
 				}
 			}
-			System.out.println("ENDING TOKEN LIST");
 		} catch (DecoderException e) {
 			e.printStackTrace();
 		}
