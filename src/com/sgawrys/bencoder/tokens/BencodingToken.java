@@ -9,4 +9,5 @@ public class BencodingToken {
 	public static final String END_TOKEN = "e";
 	public static final String COLON_TOKEN = ":";
 	
+	public static final String STRING_TOKEN = "s";
 }
