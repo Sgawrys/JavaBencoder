@@ -33,4 +33,4 @@ Quick and dirty bencoding implementation in Java.
  
 ## What features to complete
  
-* Get decoding finished
+* ~~Get decoding finished~~
