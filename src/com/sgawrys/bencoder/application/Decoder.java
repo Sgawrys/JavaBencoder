@@ -32,6 +32,13 @@ public class Decoder {
 		return DECODER;
 	}
 	
+	/**
+	 * Entry method into starting decoding, will return null if any errors
+	 * are encountered.
+	 * 
+	 * @param bencodedString
+	 * @return
+	 */
 	public Object decode(String bencodedString) {
 		List<String> tokenList;
 		try {
@@ -43,6 +50,14 @@ public class Decoder {
 		return null;
 	}
 	
+	/**
+	 * Method that takes in a list iterator and returns objects based on the next
+	 * value within the token list, for lists and dictionaries it will recursively call
+	 * itself to create those data structures correctly.
+	 * 
+	 * @param it
+	 * @return
+	 */
 	private static Object parse(ListIterator<String> it) {
 		if(it.hasNext()) {
 			switch(it.next()) {
@@ -65,7 +80,16 @@ public class Decoder {
 		return null;
 	}
 	
-	
+	/**
+	 * Takes a bencoded string and converts contents into a list of tokens, when confronted with an
+	 * integer is does not add the end token to the list and for strings it adds a starting string token
+	 * to signify the next value in the list should be interpreted as a String. For lists and dictionaries
+	 * it will add their respective start and end tokens to the list of tokens.
+	 * 
+	 * @param bencodedString
+	 * @return
+	 * @throws DecoderException
+	 */
 	private static List<String> tokenize(String bencodedString) throws DecoderException {
 		List<String> tokenList = new ArrayList<String>();
 		Matcher m = DECODE_PATTERN.matcher(bencodedString);
