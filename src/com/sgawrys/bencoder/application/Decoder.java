@@ -57,8 +57,10 @@ public class Decoder {
 	 * 
 	 * @param it
 	 * @return
+	 * @throws DecoderException 
 	 */
-	private static Object parse(ListIterator<String> it) {
+	private static Object parse(ListIterator<String> it) throws DecoderException {
+		String currentToken;
 		if(it.hasNext()) {
 			switch(it.next()) {
 				case BencodingToken.START_TOKEN:
@@ -67,14 +69,28 @@ public class Decoder {
 					return it.next();
 				case BencodingToken.START_LIST_TOKEN:
 					List<Object> objList = new ArrayList<Object>();
-					String currentToken;
 					while(it.hasNext() && (currentToken = it.next()) != BencodingToken.END_TOKEN) {
 						it.previous();
 						objList.add(parse(it)); 
 					}
 					return objList;
 				case BencodingToken.START_DICT_TOKEN:
-					break;
+					List<Object> objDictList = new ArrayList<Object>();
+					while(it.hasNext() && (currentToken = it.next()) != BencodingToken.END_TOKEN) {
+						it.previous();
+						objDictList.add(parse(it)); 
+					}
+					Map<String, Object> objMap = new HashMap<String, Object>();
+					ListIterator<Object> objListIterator = objDictList.listIterator();
+					while(objListIterator.hasNext()) {
+						String key = (String)objListIterator.next();
+						if(objListIterator.hasNext()) {
+							objMap.put(key, objListIterator.next());
+						} else {
+							throw new DecoderException();
+						}
+					}
+					return objMap;
 			}
 		}
 		return null;

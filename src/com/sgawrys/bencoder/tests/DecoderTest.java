@@ -3,7 +3,9 @@ package com.sgawrys.bencoder.tests;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -80,5 +82,31 @@ public class DecoderTest {
 		
 		assertEquals(testList, result);
  	}
+	
+	@Test
+	public void testDictDecode() throws DecoderException {
+		String dictTest = "d4:testi60ee";
+		
+		Map<String, Object> testDictionary = new HashMap<String, Object>();
+		testDictionary.put("test", 60);
+		
+		Map<?, ?> result = (Map<?, ?>)Decoder.getInstance().decode(dictTest);
+		
+		assertEquals(testDictionary, result);
+	}
+	
+	@Test
+	public void testMultiDictDcode() throws DecoderException {
+		String dictDictTest = "d4:testd3:keyi43eee";
+		
+		Map<String, Object> testDictionary = new HashMap<String, Object>();
+		Map<String, Object> secondTestDict = new HashMap<String, Object>();
+		secondTestDict.put("key", 43);
+		testDictionary.put("test", secondTestDict);
+		
+		Map<?, ?> result = (Map<?, ?>)Decoder.getInstance().decode(dictDictTest);
+		
+		assertEquals(testDictionary, result);
+	}
 
 }
