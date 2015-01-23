@@ -2,7 +2,9 @@ package com.sgawrys.bencoder.application;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,29 +36,35 @@ public class Decoder {
 		List<String> tokenList;
 		try {
 			tokenList = tokenize(bencodedString);
-			for(int i = 0; i < tokenList.size(); i++) {
-				switch(tokenList.get(i)) {
-					case BencodingToken.START_TOKEN:
-						System.out.println("INT TOKEN : " + Integer.parseInt(tokenList.get(i+1)));
-						i++;
-						break;
-					case BencodingToken.STRING_TOKEN:
-						System.out.println("STRING TOKEN : "+ tokenList.get(i+1));
-						i++;
-						break;
-					case BencodingToken.START_LIST_TOKEN:
-						
-						break;
-					case BencodingToken.START_DICT_TOKEN:
-						break;
-						
-				}
-			}
+			return parse(tokenList.listIterator());
 		} catch (DecoderException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
+	
+	private static Object parse(ListIterator<String> it) {
+		if(it.hasNext()) {
+			switch(it.next()) {
+				case BencodingToken.START_TOKEN:
+					return Integer.parseInt(it.next());
+				case BencodingToken.STRING_TOKEN:
+					return it.next();
+				case BencodingToken.START_LIST_TOKEN:
+					List<Object> objList = new ArrayList<Object>();
+					String currentToken;
+					while(it.hasNext() && (currentToken = it.next()) != BencodingToken.END_TOKEN) {
+						it.previous();
+						objList.add(parse(it)); 
+					}
+					return objList;
+				case BencodingToken.START_DICT_TOKEN:
+					break;
+			}
+		}
+		return null;
+	}
+	
 	
 	private static List<String> tokenize(String bencodedString) throws DecoderException {
 		List<String> tokenList = new ArrayList<String>();

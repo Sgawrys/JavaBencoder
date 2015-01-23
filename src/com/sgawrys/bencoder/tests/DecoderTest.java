@@ -65,5 +65,20 @@ public class DecoderTest {
 		assertEquals(testList.get(0), result.get(0));
 		assertEquals(testList.get(1), result.get(1));
 	}
+	
+	@Test
+	public void testMultiListDecode() throws DecoderException {
+		String listlistTest = "lli43eee";
+		
+		List<?> result = (List<?>)Decoder.getInstance().decode(listlistTest);
+		
+		List<Object> testList = new ArrayList<Object>();
+		List<Object> testTestList = new ArrayList<Object>();
+		testTestList.add(43);
+		
+		testList.add(testTestList);
+		
+		assertEquals(testList, result);
+ 	}
 
 }
